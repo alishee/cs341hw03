@@ -1,0 +1,187 @@
+<!--Ali Sheehan CS341B Homework 2 sheehan24.html-->
+<!DOCTYPE html>
+<html>
+
+<!--Change tab header-->
+<head>
+  <title>Cheesecake Order Form</title>
+  <link rel="stylesheet" href="stylesheets/sheehan24.css"/>
+  <script 
+    src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+  </script>
+  <script>
+      var array; 
+      var topping; 
+      var quantity; 
+    $(document).ready(function(){
+
+      //Hide form on click
+      $("#orderButton").click(function(){
+        $("form").hide();
+        
+        //The notes include the word vegan show an error message
+        if($("#notes").val().indexOf("vegan") > -1) {
+          $("#SuccessMessage").text("Warning! Cheesecake contains DAIRY. Do you wish to proceed?");
+          $("#SuccessMessage").show(); 
+          $('#proceedButton').show(); 
+          $('#cancelButton').show(); 
+            
+          
+        }
+
+        else {
+          //Show success message
+          array = $('form').serializeArray(); 
+          topping = Object.values(array[1]);  
+          quantity = Object.values(array[0]); 
+          $("#SuccessMessage").show(); 
+          $('#SuccessMessage').text("You have placed an order for  " + quantity[1] + " " + topping[1] +  " cheesecakes. Thank you for doing business with us!"); 
+          $('#SuccessMessage').change(); 
+        }
+      });
+
+      //Proceed with order anyway
+      $("#proceedButton").click(function(){ 
+        $('#proceedButton').hide(); 
+        $('#cancelButton').hide();
+        
+        
+        //Show order success message
+        array = $('form').serializeArray(); 
+        topping = Object.values(array[1]);  
+        quantity = Object.values(array[0]); 
+        $('#SuccessMessage').text("You have placed an order for  " + quantity[1] + " " + topping[1] +  " cheesecakes. Thank you for doing business with us!"); 
+        $('#SuccessMessage').change(); 
+
+      }); 
+      //Cancel order
+      $("#cancelButton").click(function(){ 
+        $('#proceedButton').hide(); 
+        $('#cancelButton').hide();
+        
+        $("#SuccessMessage").text("Your order has been canceled."); 
+      }); 
+
+
+      //change text of dropdown button based on click
+      $("#months").click(function(event){
+        $('#dropbtn').text("" + event.target.nodeValue);  //doesn't work... why not? says null but it was assigned value
+        $('#dropbtn').change(); 
+      }); 
+    });
+  </script>
+</head>
+
+<body>
+
+  <h1>Cheesecake Order Form</h1>
+
+  <!--Add a picture of a Cheesecake with Strawberry Sauce-->
+  <img src="https://upload.wikimedia.org/wikipedia/commons/9/9c/Mondays_at_Il_Forno_-_Cheesecake_with_strawberry_sauce.jpg" alt="Cheesecake with Strawberry Sauce" width="155" height="155">
+  <br>
+
+  <h3 id="SuccessMessage" name="message" hidden>This is invisible at first.</h3>
+  <form>
+
+    <!--Create a table to hold the Quantity and Toppings-->
+    <table name="information">
+
+      <!--Headings Row-->
+      <tr>
+        <td>Quantity</td>
+        <td>Topping</td>
+      </tr>
+
+      <!--Row 1-->
+      <tr>
+        <!--Empty row for correct placement of Toppings-->
+        <td></td>
+
+        <td>
+        <!--Topping Number 1-->    
+          <input type="radio" id="plainCheesecake" name="topping" value="plain" checked>
+            <label for=plainCheesecake>Plain</label>
+        </td>
+      </tr>
+
+      <!--Row 2-->
+      <tr>
+        <td>
+          <!--Quantity as a dropdown list-->
+          <select name="quantity" id="quantity">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3" selected>3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+          </select>
+        </td>
+
+        <td>
+          <!--Topping Number 2-->
+          <input type="radio" id="cherryCheesecake" name="topping" value="cherry">
+            <label for=cherryCheesecake>Cherry</label>
+        </td>
+      </tr>
+
+      <!--Row 3-->
+      <tr>
+        <!--Empty row for correct placement of Toppings-->
+        <td></td>
+
+        <td>
+          <!--Topping Number 3-->
+          <input type="radio" id="chocolateCheesecake" name="topping" value="chocolate">
+            <label for=chocolateCheesecake>Chocolate</label><br>
+        </td> 
+      </tr>
+    </table>
+
+    <!--TextArea for Order Notes-->
+    <label for="notes">Notes:</label><br>
+    <textarea name="notes" id="notes" placeholder="Enter any special instructions here." cols="31" rows="5"></textarea>
+    <br>
+
+    <!--Order button-->
+    <button id="orderButton" type="button">Order</button>
+    
+  </form>
+
+  <button id="proceedButton" type="button" hidden>Proceed</button>
+  <button id="cancelButton" type="button" hidden>Cancel</button>
+
+<!--referenced w3 schools hoverable dropdown -->
+<!--https://www.w3schools.com/howto/howto_css_dropdown.asp-->
+  <div class="dropdown">
+    <h3 id="totalOrdersText">Total Orders from </h3>
+    <button class="dropbtn" id="dropbtn">Jan</button>
+    <div class="months" id="months">
+      <option  value='Jan'>Jan</option>
+      <option  value='Feb'>Feb</option>
+      <option  value='Mar'>Mar</option>
+      <option  value='Apr'>Apr</option>
+      <option  value='May'>May</option>
+      <option  value="Jun">Jun</option>
+      <option  value="Jul">Jul</option>
+      <option  value="Aug">Aug</option>
+      <option  value="Sep">Sep</option>
+      <option  value="Oct">Oct</option>
+      <option  value="Nov">Nov</option>
+      <option  value="Dec">Dec</option>
+    </div>
+  </div> 
+  
+  <!--Ending Blurb: order count. Doesn't count anything.-->
+ 
+
+    <ul>
+      <li> 11 cherry </li>
+      <li> 17 chocolate </li>
+      <li> 31 plain </li>
+    </ul>
+  -->
+
+</body>
+
+</html>
